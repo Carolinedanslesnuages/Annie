@@ -1,0 +1,13 @@
+{
+  "name": "@carolinedanslesnuages/annie",
+  "version": "0.0.0",
+  "description": "Le résumé d'une pull request, pour la personne qui la relit : ce qui change, les points d'attention et les questions à poser. Des faits tirés du diff, sans IA ni jugement.",
+  "type": "module",
+  "bin": { "annie": "bin/annie.mjs" },
+  "files": ["bin", "src", "action.yml"],
+  "engines": { "node": ">=20" },
+  "scripts": { "test": "node --test test/*.test.mjs" },
+  "keywords": ["pull-request", "code-review", "ai-agents", "summary", "github-action"],
+  "repository": { "type": "git", "url": "git+https://github.com/Carolinedanslesnuages/annie.git" },
+  "license": "MIT"
+}

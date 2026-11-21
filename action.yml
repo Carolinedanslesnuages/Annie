@@ -1,0 +1,48 @@
+name: Annie — résumé de la PR
+description: Résume la pull request pour la personne qui la relit (ce qui change, les points d'attention, les questions à poser), en commentaire de la PR, mis à jour à chaque nouveau commit.
+author: Carolinedanslesnuages
+
+inputs:
+  base:
+    description: Commit de base à comparer. Par défaut, la base de la pull request.
+    default: ""
+  commenter:
+    description: Mettre le résumé en commentaire de la PR (« false » : seulement dans le résumé du contrôle).
+    default: "true"
+  jeton:
+    description: Jeton qui écrit le commentaire (droit « pull-requests: write »).
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Résumer la PR
+      shell: bash
+      env:
+        BASE: ${{ inputs.base || github.event.pull_request.base.sha }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        REPOSITORY: ${{ github.repository }}
+        POST_COMMENT: ${{ inputs.commenter }}
+        GH_TOKEN: ${{ inputs.jeton }}
+      run: |
+        if [ -z "$BASE" ]; then
+          echo "::notice title=Annie::Pas de pull request : rien à résumer."
+          exit 0
+        fi
+        if [ "$(git rev-parse --is-shallow-repository 2>/dev/null)" != "false" ]; then
+          echo "::error title=Annie::Historique incomplet : ajoutez « actions/checkout » avec « fetch-depth: 0 » avant ce contrôle."
+          exit 1
+        fi
+        summary_file="$RUNNER_TEMP/annie.md"
+        node "${{ github.action_path }}/bin/annie.mjs" --base "$BASE" --markdown > "$summary_file"
+        cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+        if [ "$POST_COMMENT" != "true" ] || [ -z "$PR_NUMBER" ]; then exit 0; fi
+        # The comment starts with a marker: Annie updates her own comment instead of adding new ones.
+        comment_id=$(gh api --paginate "repos/$REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[] | select(.body | startswith("<!-- annie:resume -->")) | .id' | head -n 1)
+        if [ -n "$comment_id" ]; then
+          gh api -X PATCH "repos/$REPOSITORY/issues/comments/$comment_id" -F "body=@$summary_file" > /dev/null \
+            || echo "::notice title=Annie::Commentaire non mis à jour (droits insuffisants) : le résumé est dans le résumé du contrôle."
+        else
+          gh api "repos/$REPOSITORY/issues/$PR_NUMBER/comments" -F "body=@$summary_file" > /dev/null \
+            || echo "::notice title=Annie::Commentaire non écrit (droits insuffisants, PR venue d'une fourche ?) : le résumé est dans le résumé du contrôle."
+        fi
