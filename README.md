@@ -2,6 +2,9 @@
 
 Le résumé d'une pull request, pour la personne qui la relit.
 
+Le nom rend hommage à Annie Ernaux, prix Nobel de littérature 2022, qui qualifie d'« écriture
+plate » son style factuel, sans effets : Annie résume une PR de la même façon.
+
 Un agent de code écrit vite, et beaucoup. Relire sa PR demande de savoir d'abord **ce qui
 change vraiment** et **où regarder**. Annie lit le diff et le dit, sans enjoliver : des faits,
 pas un avis.
