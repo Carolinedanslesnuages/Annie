@@ -7,10 +7,10 @@ inputs:
     description: Commit de base à comparer. Par défaut, la base de la pull request.
     default: ""
   commenter:
-    description: Mettre le résumé en commentaire de la PR (« false » : seulement dans le résumé du contrôle).
+    description: "Mettre le résumé en commentaire de la PR (« false » : seulement dans le résumé du contrôle)."
     default: "true"
   jeton:
-    description: Jeton qui écrit le commentaire (droit « pull-requests: write »).
+    description: "Jeton qui écrit le commentaire (droit « pull-requests: write »)."
     default: ${{ github.token }}
 
 runs:

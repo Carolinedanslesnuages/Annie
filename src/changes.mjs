@@ -88,7 +88,7 @@ export function dependencyChanges(folder, start, head, files) {
   return files;
 }
 
-/** Commit titles of the branch, oldest first. */
+/** Commit titles of the branch, oldest first (merge commits, like the one GitHub tests a PR on, left out). */
 export function commitTitles(folder, start, head = 'HEAD') {
-  return runGit(['log', '--reverse', '--format=%s', `${start}..${head}`], folder).split('\n').filter(Boolean);
+  return runGit(['log', '--reverse', '--no-merges', '--format=%s', `${start}..${head}`], folder).split('\n').filter(Boolean);
 }
