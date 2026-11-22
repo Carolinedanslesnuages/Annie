@@ -55,6 +55,34 @@ Chaque point vient avec la question à poser. Une simple nouvelle version publi�
 **Ce qu'Annie ne fait pas** : juger la logique, la pertinence ou le style. Elle dit où regarder ;
 la relecture reste humaine.
 
+## À quoi ça ressemble
+
+Une branche qui ajoute un export CSV, deux dépendances et une skill d'agent :
+
+```text
+Résumé pour la relecture
+3 fichiers · +24 −1 · 1 commit
+
+  consignes d’agent    1  +8 −0
+  dépendances          1  +3 −1
+  code                 1  +13 −0
+
+Ce que disent les commits
+  · feat: export CSV des commandes
+
+Points d’attention
+  ! Le code change (1 fichier(s)) sans qu’aucun test ne change.
+  ! Les consignes d’agent changent : .claude/skills/export/SKILL.md.
+  ! Dépendances ajoutée(s) : csv-exporter-pro, left-pad.
+
+Questions à poser
+  1. Comment ce changement est-il vérifié ?
+  2. Ces consignes changent ce que font les agents dans ce dépôt : la modification est-elle voulue et relue ?
+  3. Chaque nouvelle dépendance est-elle nécessaire, ancienne d’au moins deux semaines et sous une licence compatible ? (Madeleine le vérifie.)
+```
+
+Dans une pull request, le même résumé arrive en commentaire, mis à jour à chaque nouveau commit.
+
 ## Dans une pull request (GitHub Actions)
 
 ```yaml

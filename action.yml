@@ -1,5 +1,5 @@
 name: Annie — résumé de la PR
-description: Résume la pull request pour la personne qui la relit (ce qui change, les points d'attention, les questions à poser), en commentaire de la PR, mis à jour à chaque nouveau commit.
+description: "Résume la PR pour la personne qui la relit : ce qui change, les points d'attention, les questions à poser. Sans IA."
 author: Carolinedanslesnuages
 
 inputs:
@@ -46,3 +46,7 @@ runs:
           gh api "repos/$REPOSITORY/issues/$PR_NUMBER/comments" -F "body=@$summary_file" > /dev/null \
             || echo "::notice title=Annie::Commentaire non écrit (droits insuffisants, PR venue d'une fourche ?) : le résumé est dans le résumé du contrôle."
         fi
+
+branding:
+  icon: file-text
+  color: purple
