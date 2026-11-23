@@ -115,9 +115,9 @@ contrôle. `commenter: "false"` le garde seulement là.
 ## Sur votre ordinateur
 
 ```sh
-npx github:Carolinedanslesnuages/annie              # la branche courante, comparée à main
-npx github:Carolinedanslesnuages/annie --base develop
-npx github:Carolinedanslesnuages/annie --markdown   # à coller dans la description d'une PR
+npx @carolinedanslesnuages/annie              # la branche courante, comparée à main
+npx @carolinedanslesnuages/annie --base develop
+npx @carolinedanslesnuages/annie --markdown   # à coller dans la description d'une PR
 ```
 
 | Option | Rôle |
